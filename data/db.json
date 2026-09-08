@@ -1,0 +1,643 @@
+{
+  "pins": [
+    {
+      "id": "pin-rec-1788792902483-b23w",
+      "pin": "85101",
+      "term": "First Term",
+      "status": "UNUSED",
+      "usedAt": null,
+      "resultId": "res-1788792902483-hu1a",
+      "createdAt": "2026-09-07T14:55:02.483Z",
+      "studentId": "std-1788792873817-tzi3",
+      "studentNumber": "SMA-0004",
+      "academicSession": "2026/2027",
+      "studentFullName": "Blessing"
+    },
+    {
+      "id": "pin-sma-0005-1",
+      "pin": "99108",
+      "term": "First Term",
+      "status": "UNUSED",
+      "usedAt": null,
+      "resultId": "res-sma-0005-1",
+      "createdAt": "2026-09-07T15:10:00.000Z",
+      "studentId": "std-sma-0005",
+      "studentNumber": "SMA-0005",
+      "academicSession": "2026/2027",
+      "studentFullName": "Justin Michael Edenojie"
+    },
+    {
+      "id": "pin-sma-0006-1",
+      "pin": "58359",
+      "term": "First Term",
+      "status": "UNUSED",
+      "usedAt": null,
+      "resultId": "res-sma-0006-1",
+      "createdAt": "2026-09-07T15:15:00.000Z",
+      "studentId": "std-sma-0006",
+      "studentNumber": "SMA-0006",
+      "academicSession": "2026/2027",
+      "studentFullName": "Justin Gabriel Ebosetale"
+    }
+  ],
+  "results": [
+    {
+      "id": "res-1788792902483-hu1a",
+      "pin": "85101",
+      "term": "First Term",
+      "signedBy": "Mrs Mary",
+      "subjects": [
+        {
+          "id": "subj-init-0-1788792999271",
+          "ca1": 15,
+          "ca2": 15,
+          "exam": 45,
+          "grade": "A",
+          "total": 75,
+          "remark": "Distinction",
+          "subject": "English Language"
+        },
+        {
+          "id": "subj-init-1-1788792999271",
+          "ca1": 15,
+          "ca2": 15,
+          "exam": 45,
+          "grade": "A",
+          "total": 75,
+          "remark": "Distinction",
+          "subject": "Mathematics"
+        },
+        {
+          "id": "subj-init-2-1788792999271",
+          "ca1": 15,
+          "ca2": 15,
+          "exam": 45,
+          "grade": "A",
+          "total": 75,
+          "remark": "Distinction",
+          "subject": "Basic Science & Technology"
+        },
+        {
+          "id": "subj-init-3-1788792999271",
+          "ca1": 15,
+          "ca2": 15,
+          "exam": 45,
+          "grade": "A",
+          "total": 75,
+          "remark": "Distinction",
+          "subject": "Social Studies"
+        },
+        {
+          "id": "subj-init-4-1788792999271",
+          "ca1": 15,
+          "ca2": 15,
+          "exam": 45,
+          "grade": "A",
+          "total": 75,
+          "remark": "Distinction",
+          "subject": "Civic Education"
+        },
+        {
+          "id": "subj-init-5-1788792999271",
+          "ca1": 15,
+          "ca2": 15,
+          "exam": 45,
+          "grade": "A",
+          "total": 75,
+          "remark": "Distinction",
+          "subject": "Agricultural Science"
+        },
+        {
+          "id": "subj-init-6-1788792999271",
+          "ca1": 15,
+          "ca2": 15,
+          "exam": 45,
+          "grade": "A",
+          "total": 75,
+          "remark": "Distinction",
+          "subject": "Computer Studies / ICT"
+        },
+        {
+          "id": "subj-init-7-1788792999271",
+          "ca1": 15,
+          "ca2": 15,
+          "exam": 45,
+          "grade": "A",
+          "total": 75,
+          "remark": "Distinction",
+          "subject": "Business Studies"
+        },
+        {
+          "id": "subj-init-8-1788792999271",
+          "ca1": 15,
+          "ca2": 15,
+          "exam": 45,
+          "grade": "A",
+          "total": 75,
+          "remark": "Distinction",
+          "subject": "Christian Religious Studies"
+        },
+        {
+          "id": "subj-init-9-1788792999271",
+          "ca1": 15,
+          "ca2": 15,
+          "exam": 45,
+          "grade": "A",
+          "total": 75,
+          "remark": "Distinction",
+          "subject": "Physical & Health Education"
+        }
+      ],
+      "className": "JSS 1",
+      "createdAt": "2026-09-07T14:55:02.483Z",
+      "studentId": "std-1788792873817-tzi3",
+      "updatedAt": "2026-09-07T14:55:02.483Z",
+      "totalScore": 750,
+      "isPublished": true,
+      "averageScore": 75,
+      "overallGrade": "A",
+      "studentNumber": "SMA-0004",
+      "teacherRemark": "Demonstrated commendable dedication, disciplined study habits, and consistent academic progress.",
+      "academicSession": "2026/2027",
+      "principalRemark": "An exceptional performance. Promoted with pride to the next academic level.",
+      "studentFullName": "Blessing"
+    },
+    {
+      "id": "res-sma-0005-1",
+      "pin": "99108",
+      "term": "First Term",
+      "signedBy": "Mrs Mary",
+      "className": "SS 2",
+      "createdAt": "2026-09-07T15:10:00.000Z",
+      "studentId": "std-sma-0005",
+      "updatedAt": "2026-09-07T15:10:00.000Z",
+      "totalScore": 600,
+      "isPublished": true,
+      "averageScore": 75,
+      "overallGrade": "A",
+      "studentNumber": "SMA-0005",
+      "teacherRemark": "Demonstrated commendable dedication, disciplined study habits, and consistent academic progress.",
+      "academicSession": "2026/2027",
+      "principalRemark": "An exceptional performance. Promoted with pride to the next academic level.",
+      "studentFullName": "Justin Michael Edenojie",
+      "subjects": [
+        {
+          "id": "sub-1",
+          "subject": "English Language",
+          "ca1": 15,
+          "ca2": 15,
+          "exam": 45,
+          "total": 75,
+          "grade": "A",
+          "remark": "Distinction"
+        },
+        {
+          "id": "sub-2",
+          "subject": "Mathematics",
+          "ca1": 15,
+          "ca2": 15,
+          "exam": 45,
+          "total": 75,
+          "grade": "A",
+          "remark": "Distinction"
+        },
+        {
+          "id": "sub-3",
+          "subject": "Biology",
+          "ca1": 15,
+          "ca2": 15,
+          "exam": 45,
+          "total": 75,
+          "grade": "A",
+          "remark": "Distinction"
+        },
+        {
+          "id": "sub-4",
+          "subject": "Chemistry",
+          "ca1": 15,
+          "ca2": 15,
+          "exam": 45,
+          "total": 75,
+          "grade": "A",
+          "remark": "Distinction"
+        },
+        {
+          "id": "sub-5",
+          "subject": "Physics",
+          "ca1": 15,
+          "ca2": 15,
+          "exam": 45,
+          "total": 75,
+          "grade": "A",
+          "remark": "Distinction"
+        },
+        {
+          "id": "sub-6",
+          "subject": "Economics",
+          "ca1": 15,
+          "ca2": 15,
+          "exam": 45,
+          "total": 75,
+          "grade": "A",
+          "remark": "Distinction"
+        },
+        {
+          "id": "sub-7",
+          "subject": "Civic Education",
+          "ca1": 15,
+          "ca2": 15,
+          "exam": 45,
+          "total": 75,
+          "grade": "A",
+          "remark": "Distinction"
+        },
+        {
+          "id": "sub-8",
+          "subject": "Data Processing",
+          "ca1": 15,
+          "ca2": 15,
+          "exam": 45,
+          "total": 75,
+          "grade": "A",
+          "remark": "Distinction"
+        }
+      ]
+    },
+    {
+      "id": "res-sma-0006-1",
+      "pin": "58359",
+      "term": "First Term",
+      "signedBy": "Mrs Mary",
+      "className": "JSS 3",
+      "createdAt": "2026-09-07T15:15:00.000Z",
+      "studentId": "std-sma-0006",
+      "updatedAt": "2026-09-07T15:15:00.000Z",
+      "totalScore": 750,
+      "isPublished": true,
+      "averageScore": 75,
+      "overallGrade": "A",
+      "studentNumber": "SMA-0006",
+      "teacherRemark": "Demonstrated commendable dedication, disciplined study habits, and consistent academic progress.",
+      "academicSession": "2026/2027",
+      "principalRemark": "An exceptional performance. Promoted with pride to the next academic level.",
+      "studentFullName": "Justin Gabriel Ebosetale",
+      "subjects": [
+        {
+          "id": "sub-1",
+          "subject": "English Language",
+          "ca1": 15,
+          "ca2": 15,
+          "exam": 45,
+          "total": 75,
+          "grade": "A",
+          "remark": "Distinction"
+        },
+        {
+          "id": "sub-2",
+          "subject": "Mathematics",
+          "ca1": 15,
+          "ca2": 15,
+          "exam": 45,
+          "total": 75,
+          "grade": "A",
+          "remark": "Distinction"
+        },
+        {
+          "id": "sub-3",
+          "subject": "Basic Science",
+          "ca1": 15,
+          "ca2": 15,
+          "exam": 45,
+          "total": 75,
+          "grade": "A",
+          "remark": "Distinction"
+        },
+        {
+          "id": "sub-4",
+          "subject": "Basic Technology",
+          "ca1": 15,
+          "ca2": 15,
+          "exam": 45,
+          "total": 75,
+          "grade": "A",
+          "remark": "Distinction"
+        },
+        {
+          "id": "sub-5",
+          "subject": "Social Studies",
+          "ca1": 15,
+          "ca2": 15,
+          "exam": 45,
+          "total": 75,
+          "grade": "A",
+          "remark": "Distinction"
+        },
+        {
+          "id": "sub-6",
+          "subject": "Civic Education",
+          "ca1": 15,
+          "ca2": 15,
+          "exam": 45,
+          "total": 75,
+          "grade": "A",
+          "remark": "Distinction"
+        },
+        {
+          "id": "sub-7",
+          "subject": "Agricultural Science",
+          "ca1": 15,
+          "ca2": 15,
+          "exam": 45,
+          "total": 75,
+          "grade": "A",
+          "remark": "Distinction"
+        },
+        {
+          "id": "sub-8",
+          "subject": "Computer Studies",
+          "ca1": 15,
+          "ca2": 15,
+          "exam": 45,
+          "total": 75,
+          "grade": "A",
+          "remark": "Distinction"
+        },
+        {
+          "id": "sub-9",
+          "subject": "Business Studies",
+          "ca1": 15,
+          "ca2": 15,
+          "exam": 45,
+          "total": 75,
+          "grade": "A",
+          "remark": "Distinction"
+        },
+        {
+          "id": "sub-10",
+          "subject": "Physical & Health Education",
+          "ca1": 15,
+          "ca2": 15,
+          "exam": 45,
+          "total": 75,
+          "grade": "A",
+          "remark": "Distinction"
+        }
+      ]
+    }
+  ],
+  "sessions": [
+    {
+      "id": "sess-1",
+      "session": "2026/2027",
+      "isCurrent": true
+    },
+    {
+      "id": "sess-2",
+      "session": "2027/2028",
+      "isCurrent": false
+    },
+    {
+      "id": "sess-3",
+      "session": "2028/2029",
+      "isCurrent": false
+    },
+    {
+      "id": "sess-4",
+      "session": "2029/2030",
+      "isCurrent": false
+    },
+    {
+      "id": "sess-5",
+      "session": "2030/2031",
+      "isCurrent": false
+    },
+    {
+      "id": "sess-6",
+      "session": "2031/2032",
+      "isCurrent": false
+    }
+  ],
+  "settings": {
+    "motto": "Learning is fun",
+    "logoUrl": "/logo.png",
+    "maxScores": {
+      "ca1": 20,
+      "ca2": 20,
+      "exam": 60
+    },
+    "pinLength": 5,
+    "schoolName": "ST. MICHAEL GREAT ACADEMY",
+    "currentTerm": "First Term",
+    "established": 2023,
+    "portalTitle": "OFFICIAL RESULT PORTAL",
+    "currentSession": "2026/2027",
+    "defaultRemarks": {
+      "signedBy": "Mrs Mary",
+      "teacherRemark": "Demonstrated commendable dedication, disciplined study habits, and consistent academic progress.",
+      "principalRemark": "An exceptional performance. Promoted with pride to the next academic level."
+    },
+    "customPinLength": 5,
+    "activeBackgroundId": "bg-classic-parchment"
+  },
+  "students": [
+    {
+      "id": "std-1788792873817-tzi3",
+      "fullName": "Blessing",
+      "studentNumber": "SMA-0004",
+      "className": "JSS 1",
+      "gender": "Female",
+      "guardianContact": "",
+      "createdAt": "2026-09-07T14:54:33.817Z"
+    },
+    {
+      "id": "std-sma-0005",
+      "fullName": "Justin Michael Edenojie",
+      "studentNumber": "SMA-0005",
+      "className": "SS 2",
+      "gender": "Male",
+      "guardianContact": "",
+      "createdAt": "2026-09-07T15:10:00.000Z"
+    },
+    {
+      "id": "std-sma-0006",
+      "fullName": "Justin Gabriel Ebosetale",
+      "studentNumber": "SMA-0006",
+      "className": "JSS 3",
+      "gender": "Male",
+      "guardianContact": "",
+      "createdAt": "2026-09-07T15:15:00.000Z"
+    }
+  ],
+  "backgrounds": [
+    {
+      "id": "bg-classic-parchment",
+      "name": "Classic Academic Parchment",
+      "type": "builtin",
+      "themeStyle": "parchment",
+      "isProtected": true
+    },
+    {
+      "id": "bg-royal-navy",
+      "name": "Royal Navy & 24K Gold",
+      "type": "builtin",
+      "themeStyle": "royal-navy",
+      "isProtected": true
+    },
+    {
+      "id": "bg-ivory-crest",
+      "name": "Ivory Crest Watermark",
+      "type": "builtin",
+      "themeStyle": "ivory-crest",
+      "isProtected": true
+    },
+    {
+      "id": "bg-golden-academic",
+      "name": "Golden Guilloche Security",
+      "type": "builtin",
+      "themeStyle": "golden-academic",
+      "isProtected": true
+    },
+    {
+      "id": "bg-vintage-diploma",
+      "name": "Vintage Master Diploma",
+      "type": "builtin",
+      "themeStyle": "vintage-diploma",
+      "isProtected": true
+    },
+    {
+      "id": "bg-renaissance-scroll",
+      "name": "Renaissance Heraldic Scroll",
+      "type": "builtin",
+      "themeStyle": "renaissance-scroll",
+      "isProtected": true
+    },
+    {
+      "id": "bg-modern-minimalist",
+      "name": "Modern Academic Minimalist",
+      "type": "builtin",
+      "themeStyle": "modern-minimalist",
+      "isProtected": true
+    },
+    {
+      "id": "bg-regal-damask",
+      "name": "Regal Gold Damask Weave",
+      "type": "builtin",
+      "themeStyle": "regal-damask",
+      "isProtected": true
+    },
+    {
+      "id": "bg-emerald-academic",
+      "name": "Teal & Gold Laureate",
+      "type": "builtin",
+      "themeStyle": "emerald-academic",
+      "isProtected": true
+    },
+    {
+      "id": "bg-celestial-stars",
+      "name": "Academy Constellation Stars",
+      "type": "builtin",
+      "themeStyle": "celestial-stars",
+      "isProtected": true
+    },
+    {
+      "id": "bg-classic-monogram",
+      "name": "Security Microline Monogram",
+      "type": "builtin",
+      "themeStyle": "classic-monogram",
+      "isProtected": true
+    },
+    {
+      "id": "bg-honors-ribbon",
+      "name": "Presidential Honors Ribbon",
+      "type": "builtin",
+      "themeStyle": "honors-ribbon",
+      "isProtected": true
+    }
+  ],
+  "gradeScales": [
+    {
+      "id": "gr-1",
+      "remark": "Distinction",
+      "maxScore": 100,
+      "minScore": 75,
+      "gradeLetter": "A"
+    },
+    {
+      "id": "gr-2",
+      "remark": "Very Good",
+      "maxScore": 74,
+      "minScore": 65,
+      "gradeLetter": "B"
+    },
+    {
+      "id": "gr-3",
+      "remark": "Credit",
+      "maxScore": 64,
+      "minScore": 50,
+      "gradeLetter": "C"
+    },
+    {
+      "id": "gr-4",
+      "remark": "Pass",
+      "maxScore": 49,
+      "minScore": 45,
+      "gradeLetter": "D"
+    },
+    {
+      "id": "gr-5",
+      "remark": "Fair",
+      "maxScore": 44,
+      "minScore": 40,
+      "gradeLetter": "E"
+    },
+    {
+      "id": "gr-6",
+      "remark": "Fail",
+      "maxScore": 39,
+      "minScore": 0,
+      "gradeLetter": "F"
+    }
+  ],
+  "monitoringLogs": [
+    {
+      "id": "log-1788710933582-uft5",
+      "pin": "71209",
+      "term": "First Term",
+      "message": "Result verified successfully.",
+      "success": true,
+      "pinStatus": "USED",
+      "timestamp": "2026-09-06T16:08:53.582Z",
+      "userAgent": "curl/7.88.1",
+      "studentNumber": "SMA-0003",
+      "academicSession": "2026/2027",
+      "studentFullName": "Divine Favour Olumide"
+    },
+    {
+      "id": "log-1788710931091-64ui",
+      "pin": "89342",
+      "term": "First Term",
+      "message": "Result verified successfully.",
+      "success": true,
+      "pinStatus": "USED",
+      "timestamp": "2026-09-06T16:08:51.091Z",
+      "userAgent": "curl/7.88.1",
+      "studentNumber": "SMA-0002",
+      "academicSession": "2026/2027",
+      "studentFullName": "Fatima Zahra Mohammed"
+    },
+    {
+      "id": "log-1788710926753-23jf",
+      "pin": "54821",
+      "term": "First Term",
+      "message": "Result verified successfully.",
+      "success": true,
+      "pinStatus": "USED",
+      "timestamp": "2026-09-06T16:08:46.753Z",
+      "userAgent": "curl/7.88.1",
+      "studentNumber": "SMA-0001",
+      "academicSession": "2026/2027",
+      "studentFullName": "Chukwuemeka David Emmanuel"
+    }
+  ],
+  "adminPasswordHash": "37d74b5a49a0c398cdc0a3564ac9ca9be0ca73b3f1616736ec991807c3b5a1c6"
+}

@@ -1,0 +1,6 @@
+{
+  "name": "St. Michael Great Academy Official Result Portal",
+  "description": "Official result portal for St. Michael Great Academy, established 2023. Motto: Learning is fun.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

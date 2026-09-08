@@ -1,0 +1,16 @@
+{
+  "name": "St. Michael Great Academy - Official Result Portal",
+  "short_name": "SMGA Portal",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#081326",
+  "theme_color": "#0c1a36",
+  "icons": [
+    {
+      "src": "/logo.png",
+      "sizes": "192x192 512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
