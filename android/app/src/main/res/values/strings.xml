@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ST. MICHAEL GREAT ACADEMY</string>
+    <string name="portal_title">OFFICIAL RESULT PORTAL</string>
+    <string name="motto">Learning is fun</string>
+    <string name="student_name_label">Student Full Name</string>
+    <string name="pin_label">Result PIN</string>
+    <string name="check_result_btn">CHECK RESULT</string>
+    <string name="print_result_btn">PRINT RESULT</string>
+    <string name="share_result_btn">SHARE RESULT</string>
+    <string name="check_another_btn">CHECK ANOTHER RESULT</string>
+    <string name="instructions_title">How to Check Your Result</string>
+    <string name="instructions_step_1">1. Enter your registered Student Full Name as documented by the school.</string>
+    <string name="instructions_step_2">2. Enter your unique Result PIN provided on your school scratch card.</string>
+    <string name="instructions_step_3">3. Tap CHECK RESULT. Each PIN is single-use and will be marked as USED upon verification.</string>
+    <string name="offline_error">You are offline. Please connect to the internet to verify your result.</string>
+    <string name="empty_fields_error">Please enter your full name and result PIN.</string>
+</resources>

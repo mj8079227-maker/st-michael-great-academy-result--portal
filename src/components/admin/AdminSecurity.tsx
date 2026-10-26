@@ -19,12 +19,37 @@ import {
   Image as ImageIcon,
 } from 'lucide-react';
 import { changeAdminCredential, restoreDatabaseBackup } from '../../lib/api';
+import {
+  Student,
+  StudentResult,
+  PinRecord,
+  SchoolSettings,
+  GradeScale,
+  AcademicSession,
+  ResultBackground,
+} from '../../types';
 
 interface AdminSecurityProps {
+  students?: Student[];
+  results?: StudentResult[];
+  pins?: PinRecord[];
+  settings?: SchoolSettings;
+  gradeScales?: GradeScale[];
+  sessions?: AcademicSession[];
+  backgrounds?: ResultBackground[];
   onRefreshData: () => Promise<void>;
 }
 
-export const AdminSecurity: React.FC<AdminSecurityProps> = ({ onRefreshData }) => {
+export const AdminSecurity: React.FC<AdminSecurityProps> = ({
+  students = [],
+  results = [],
+  pins = [],
+  settings,
+  gradeScales = [],
+  sessions = [],
+  backgrounds = [],
+  onRefreshData,
+}) => {
   const [oldPassword, setOldPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -42,6 +67,32 @@ export const AdminSecurity: React.FC<AdminSecurityProps> = ({ onRefreshData }) =
   const [restoreError, setRestoreError] = useState<string | null>(null);
   const [isRestoring, setIsRestoring] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleDownloadCurrentDatabase = () => {
+    try {
+      const fullDb = {
+        settings,
+        students,
+        results,
+        pins,
+        gradeScales,
+        sessions,
+        backgrounds,
+        exportedAt: new Date().toISOString(),
+      };
+      const blob = new Blob([JSON.stringify(fullDb, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `st_michael_academy_database_live_${new Date().toISOString().slice(0, 10)}.json`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    } catch (err: any) {
+      alert('Failed to export current database: ' + err.message);
+    }
+  };
 
   const handleRestoreFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -323,20 +374,20 @@ export const AdminSecurity: React.FC<AdminSecurityProps> = ({ onRefreshData }) =
                 </span>
                 <FileJson className="h-4 w-4 text-slate-400" />
               </div>
-              <h4 className="mt-3 text-sm font-bold text-slate-100">Database JSON Export (.JSON)</h4>
+              <h4 className="mt-3 text-sm font-bold text-slate-100">Live Database Export (.JSON)</h4>
               <p className="mt-1.5 text-xs text-slate-400 leading-relaxed">
-                Direct export of all students (Blessing, Justin Michael, Justin Gabriel), published results, PINs, grading scales, and school settings.
+                Direct dynamic export of all {students.length} registered students in your school, all examination scorecards, scratch PINs, grading rules, and settings.
               </p>
             </div>
             <div className="mt-5 pt-3 border-t border-slate-800">
-              <a
-                href="/downloads/st_michael_academy_database_export.json"
-                download="st_michael_academy_database_export.json"
-                className="w-full inline-flex items-center justify-center gap-2 rounded-lg bg-blue-600 px-3.5 py-2.5 text-xs font-bold text-white hover:bg-blue-500 active:scale-95 transition"
+              <button
+                type="button"
+                onClick={handleDownloadCurrentDatabase}
+                className="w-full inline-flex items-center justify-center gap-2 rounded-lg bg-blue-600 px-3.5 py-2.5 text-xs font-bold text-white hover:bg-blue-500 active:scale-95 transition cursor-pointer"
               >
                 <Download className="h-4 w-4" />
-                <span>Download Database JSON</span>
-              </a>
+                <span>Download Live Database JSON ({students.length} Students)</span>
+              </button>
             </div>
           </div>
 

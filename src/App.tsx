@@ -324,7 +324,16 @@ export default function App() {
           )}
 
           {adminSection === 'security' && (
-            <AdminSecurity onRefreshData={loadAdminData} />
+            <AdminSecurity 
+              students={students}
+              results={results}
+              pins={pins}
+              settings={settings}
+              gradeScales={gradeScales}
+              sessions={sessions}
+              backgrounds={backgrounds}
+              onRefreshData={loadAdminData} 
+            />
           )}
         </AdminLayout>
       ) : activeView === 'result' && viewingResult && publicConfig ? (

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primary_navy">#0B192C</color>
+    <color name="primary_navy_light">#1E3E62</color>
+    <color name="primary_navy_dark">#060E18</color>
+    <color name="accent_gold">#D4AF37</color>
+    <color name="accent_gold_dark">#B38F24</color>
+    <color name="surface_white">#FFFFFF</color>
+    <color name="surface_cream">#FAF8F5</color>
+    <color name="border_subtle">#E2E8F0</color>
+    <color name="text_primary">#0B192C</color>
+    <color name="text_secondary">#4A5568</color>
+    <color name="error_red">#DC2626</color>
+    <color name="success_green">#16A34A</color>
+</resources>

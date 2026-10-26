@@ -24,6 +24,7 @@ import {
   BUILTIN_RESULT_BACKGROUNDS,
   calculateGrade,
 } from './src/lib/initialData';
+import { syncDatabaseToSupabase, supabaseRequest, loadDatabaseFromSupabase } from './src/lib/supabaseSync';
 
 const app = express();
 const PORT = 3000;
@@ -301,8 +302,8 @@ function loadDatabase(): DatabaseSchema {
   return initialDb;
 }
 
-// Save database to both local storage and permanent Cloud SQL
-function saveDatabase(dataToSave: DatabaseSchema): void {
+// Save database to local storage, permanent Cloud SQL, and live Supabase
+async function saveDatabase(dataToSave: DatabaseSchema): Promise<void> {
   // 1. Immediate local filesystem persistence
   try {
     const tempPath = `${DB_FILE}.tmp`;
@@ -333,6 +334,13 @@ function saveDatabase(dataToSave: DatabaseSchema): void {
       .catch((err) => {
         console.error('Cloud SQL async persistence notice:', err?.message || err);
       });
+  }
+
+  // 3. Permanent Supabase cloud persistence (await for guaranteed consistency across environments)
+  try {
+    await syncDatabaseToSupabase(dataToSave);
+  } catch (err: any) {
+    console.error('Supabase sync notice:', err?.message || err);
   }
 }
 
@@ -378,6 +386,56 @@ async function initCloudSqlData() {
 }
 
 initCloudSqlData();
+
+// Load authoritative state from Supabase on startup
+async function initSupabaseData() {
+  try {
+    const supabaseData = await loadDatabaseFromSupabase();
+    if (supabaseData && Array.isArray(supabaseData.students) && supabaseData.students.length > 0) {
+      // Merge or adopt Supabase students
+      const existingMap = new Map(database.students.map(s => [s.studentNumber, s]));
+      supabaseData.students.forEach(s => {
+        existingMap.set(s.studentNumber, s);
+      });
+      database.students = Array.from(existingMap.values());
+
+      // Merge results
+      if (Array.isArray(supabaseData.results) && supabaseData.results.length > 0) {
+        const resMap = new Map(database.results.map(r => [`${r.studentNumber}-${r.term}`, r]));
+        supabaseData.results.forEach(r => {
+          resMap.set(`${r.studentNumber}-${r.term}`, r);
+        });
+        database.results = Array.from(resMap.values());
+      }
+
+      // Merge pins
+      if (Array.isArray(supabaseData.pins) && supabaseData.pins.length > 0) {
+        const pinMap = new Map(database.pins.map(p => [p.pin, p]));
+        supabaseData.pins.forEach(p => {
+          pinMap.set(p.pin, p);
+        });
+        database.pins = Array.from(pinMap.values());
+      }
+
+      // Merge settings if returned
+      if (supabaseData.settings) {
+        database.settings = { ...database.settings, ...supabaseData.settings };
+      }
+      if (Array.isArray(supabaseData.gradeScales) && supabaseData.gradeScales.length > 0) {
+        database.gradeScales = supabaseData.gradeScales;
+      }
+      if (Array.isArray(supabaseData.sessions) && supabaseData.sessions.length > 0) {
+        database.sessions = supabaseData.sessions;
+      }
+
+      console.log(`[Supabase] Live database synchronized: ${database.students.length} students, ${database.results.length} results, ${database.pins.length} PINs.`);
+    }
+  } catch (err: any) {
+    console.error('[Supabase Init Notice]:', err?.message || err);
+  }
+}
+
+initSupabaseData();
 
 // Auth Middleware for Admin routes
 function authAdmin(req: Request, res: Response, next: NextFunction) {
@@ -646,7 +704,7 @@ app.get('/api/admin/data', authAdmin, (req: Request, res: Response) => {
 });
 
 // Update school settings (motto, name, pinLength, maxScores, defaultRemarks, etc.)
-app.post('/api/admin/settings', authAdmin, (req: Request, res: Response) => {
+app.post('/api/admin/settings', authAdmin, async (req: Request, res: Response) => {
   const newSettings: Partial<SchoolSettings> = req.body;
   database.settings = { ...database.settings, ...newSettings };
 
@@ -658,12 +716,12 @@ app.post('/api/admin/settings', authAdmin, (req: Request, res: Response) => {
     });
   }
 
-  saveDatabase(database);
+  await saveDatabase(database);
   return res.json({ success: true, settings: database.settings, results: database.results });
 });
 
 // STUDENT CRUD
-app.post('/api/admin/students/save', authAdmin, (req: Request, res: Response) => {
+app.post('/api/admin/students/save', authAdmin, async (req: Request, res: Response) => {
   const studentData: Student = req.body;
 
   if (!studentData.fullName || !studentData.studentNumber || !studentData.className) {
@@ -707,11 +765,11 @@ app.post('/api/admin/students/save', authAdmin, (req: Request, res: Response) =>
     });
   }
 
-  saveDatabase(database);
+  await saveDatabase(database);
   return res.json({ success: true, students: database.students });
 });
 
-app.post('/api/admin/students/delete', authAdmin, (req: Request, res: Response) => {
+app.post('/api/admin/students/delete', authAdmin, async (req: Request, res: Response) => {
   const { id } = req.body;
   if (!id) return res.status(400).json({ error: 'Student ID is required.' });
 
@@ -720,12 +778,20 @@ app.post('/api/admin/students/delete', authAdmin, (req: Request, res: Response) 
   database.results = database.results.filter(r => r.studentId !== id);
   database.pins = database.pins.filter(p => p.studentId !== id);
 
-  saveDatabase(database);
+  await saveDatabase(database);
+
+  // Sync deletion to Supabase
+  await Promise.all([
+    supabaseRequest(`students?id=eq.${encodeURIComponent(id)}`, 'DELETE').catch(() => {}),
+    supabaseRequest(`results?student_id=eq.${encodeURIComponent(id)}`, 'DELETE').catch(() => {}),
+    supabaseRequest(`pins?student_id=eq.${encodeURIComponent(id)}`, 'DELETE').catch(() => {})
+  ]);
+
   return res.json({ success: true, students: database.students });
 });
 
 // RESULTS CRUD
-app.post('/api/admin/results/save', authAdmin, (req: Request, res: Response) => {
+app.post('/api/admin/results/save', authAdmin, async (req: Request, res: Response) => {
   const resultData: StudentResult = req.body;
 
   if (!resultData.studentId || !resultData.className || !resultData.academicSession || !resultData.term) {
@@ -850,34 +916,41 @@ app.post('/api/admin/results/save', authAdmin, (req: Request, res: Response) => 
     });
   }
 
-  saveDatabase(database);
+  await saveDatabase(database);
   return res.json({ success: true, result: finalResult, pins: database.pins });
 });
 
-app.post('/api/admin/results/delete', authAdmin, (req: Request, res: Response) => {
+app.post('/api/admin/results/delete', authAdmin, async (req: Request, res: Response) => {
   const { id } = req.body;
   if (!id) return res.status(400).json({ error: 'Result ID is required.' });
 
   database.results = database.results.filter(r => r.id !== id);
   database.pins = database.pins.filter(p => p.resultId !== id);
 
-  saveDatabase(database);
+  await saveDatabase(database);
+
+  // Sync deletion to Supabase
+  await Promise.all([
+    supabaseRequest(`results?id=eq.${encodeURIComponent(id)}`, 'DELETE').catch(() => {}),
+    supabaseRequest(`pins?result_id=eq.${encodeURIComponent(id)}`, 'DELETE').catch(() => {})
+  ]);
+
   return res.json({ success: true, results: database.results, pins: database.pins });
 });
 
-app.post('/api/admin/results/toggle-publish', authAdmin, (req: Request, res: Response) => {
+app.post('/api/admin/results/toggle-publish', authAdmin, async (req: Request, res: Response) => {
   const { id } = req.body;
   const result = database.results.find(r => r.id === id);
   if (!result) return res.status(404).json({ error: 'Result not found.' });
 
   result.isPublished = !result.isPublished;
-  saveDatabase(database);
+  await saveDatabase(database);
   return res.json({ success: true, result });
 });
 
 // PIN MANAGEMENT
 // Reset a USED PIN back to UNUSED (exact prompt requirement: keep SAME pin, change status)
-app.post('/api/admin/pins/reset', authAdmin, (req: Request, res: Response) => {
+app.post('/api/admin/pins/reset', authAdmin, async (req: Request, res: Response) => {
   const { pinId } = req.body;
   const pinRecord = database.pins.find(p => p.id === pinId);
   if (!pinRecord) {
@@ -886,7 +959,7 @@ app.post('/api/admin/pins/reset', authAdmin, (req: Request, res: Response) => {
 
   pinRecord.status = 'UNUSED';
   pinRecord.usedAt = null;
-  saveDatabase(database);
+  await saveDatabase(database);
 
   return res.json({
     success: true,
@@ -906,7 +979,7 @@ app.post('/api/admin/pins/generate-unique', authAdmin, (req: Request, res: Respo
 });
 
 // Edit / Update PIN
-app.post('/api/admin/pins/update', authAdmin, (req: Request, res: Response) => {
+app.post('/api/admin/pins/update', authAdmin, async (req: Request, res: Response) => {
   const { pinId, pin } = req.body;
   if (!pinId || !pin) {
     return res.status(400).json({ error: 'PIN ID and new PIN are required.' });
@@ -935,7 +1008,7 @@ app.post('/api/admin/pins/update', authAdmin, (req: Request, res: Response) => {
     result.pin = cleanPin;
   }
 
-  saveDatabase(database);
+  await saveDatabase(database);
   return res.json({ 
     success: true, 
     message: `PIN updated to ${cleanPin} permanently.`, 
@@ -946,18 +1019,19 @@ app.post('/api/admin/pins/update', authAdmin, (req: Request, res: Response) => {
 });
 
 // Delete PIN permanently
-app.post('/api/admin/pins/delete', authAdmin, (req: Request, res: Response) => {
+app.post('/api/admin/pins/delete', authAdmin, async (req: Request, res: Response) => {
   const { pinId } = req.body;
   if (!pinId) {
     return res.status(400).json({ error: 'PIN ID is required.' });
   }
   database.pins = database.pins.filter(p => p.id !== pinId);
-  saveDatabase(database);
+  await saveDatabase(database);
+  await supabaseRequest(`pins?id=eq.${encodeURIComponent(pinId)}`, 'DELETE').catch(() => {});
   return res.json({ success: true, pins: database.pins });
 });
 
 // GRADE SCALES
-app.post('/api/admin/grades/save', authAdmin, (req: Request, res: Response) => {
+app.post('/api/admin/grades/save', authAdmin, async (req: Request, res: Response) => {
   const { scales } = req.body;
   if (!Array.isArray(scales)) {
     return res.status(400).json({ error: 'Invalid scales format.' });
@@ -975,12 +1049,12 @@ app.post('/api/admin/grades/save', authAdmin, (req: Request, res: Response) => {
     resRecord.overallGrade = calculateGrade(resRecord.averageScore, scales).grade;
   });
 
-  saveDatabase(database);
+  await saveDatabase(database);
   return res.json({ success: true, gradeScales: database.gradeScales, results: database.results });
 });
 
 // ACADEMIC SESSIONS & TERMS
-app.post('/api/admin/sessions/add', authAdmin, (req: Request, res: Response) => {
+app.post('/api/admin/sessions/add', authAdmin, async (req: Request, res: Response) => {
   const { session } = req.body;
   if (!session || !session.trim()) {
     return res.status(400).json({ error: 'Session name is required (e.g. 2032/2033).' });
@@ -997,11 +1071,11 @@ app.post('/api/admin/sessions/add', authAdmin, (req: Request, res: Response) => 
     isCurrent: false,
   });
 
-  saveDatabase(database);
+  await saveDatabase(database);
   return res.json({ success: true, sessions: database.sessions });
 });
 
-app.post('/api/admin/sessions/set-current', authAdmin, (req: Request, res: Response) => {
+app.post('/api/admin/sessions/set-current', authAdmin, async (req: Request, res: Response) => {
   const { session, term } = req.body;
   if (session) {
     database.sessions.forEach(s => {
@@ -1013,7 +1087,7 @@ app.post('/api/admin/sessions/set-current', authAdmin, (req: Request, res: Respo
     database.settings.currentTerm = term;
   }
 
-  saveDatabase(database);
+  await saveDatabase(database);
   return res.json({ success: true, settings: database.settings, sessions: database.sessions });
 });
 
@@ -1113,7 +1187,7 @@ app.post('/api/admin/background/set-active', authAdmin, (req: Request, res: Resp
 
 // SYNC route for Admin Header SYNC button
 app.post('/api/admin/sync', authAdmin, async (req: Request, res: Response) => {
-  // Pull directly from Cloud SQL if available
+  // 1. Pull directly from Cloud SQL if available
   if (process.env.SQL_HOST && process.env.SQL_USER) {
     try {
       const records = await db
@@ -1131,13 +1205,42 @@ app.post('/api/admin/sync', authAdmin, async (req: Request, res: Response) => {
     } catch (err) {
       console.error('Error syncing from Cloud SQL:', err);
     }
-  } else {
-    database = loadDatabase();
   }
+
+  // 2. Also synchronize with live Supabase cloud database
+  try {
+    const supabaseData = await loadDatabaseFromSupabase();
+    if (supabaseData && Array.isArray(supabaseData.students) && supabaseData.students.length > 0) {
+      // Merge Supabase records into current database
+      const existingMap = new Map(database.students.map(s => [s.studentNumber, s]));
+      supabaseData.students.forEach(s => existingMap.set(s.studentNumber, s));
+      database.students = Array.from(existingMap.values());
+
+      if (Array.isArray(supabaseData.results) && supabaseData.results.length > 0) {
+        const resMap = new Map(database.results.map(r => [`${r.studentNumber}-${r.term}`, r]));
+        supabaseData.results.forEach(r => resMap.set(`${r.studentNumber}-${r.term}`, r));
+        database.results = Array.from(resMap.values());
+      }
+
+      if (Array.isArray(supabaseData.pins) && supabaseData.pins.length > 0) {
+        const pinMap = new Map(database.pins.map(p => [p.pin, p]));
+        supabaseData.pins.forEach(p => pinMap.set(p.pin, p));
+        database.pins = Array.from(pinMap.values());
+      }
+    }
+
+    // Now push any local students/results back to Supabase to guarantee 100% sync
+    await syncDatabaseToSupabase(database);
+  } catch (err: any) {
+    console.error('Error in Supabase sync:', err?.message || err);
+  }
+
+  // Persist updated merged state to local disk and Cloud SQL
+  saveDatabase(database);
 
   return res.json({
     success: true,
-    message: 'Synchronized with permanent database successfully.',
+    message: 'Synchronized with Supabase & permanent database successfully.',
     data: {
       settings: database.settings,
       studentsCount: database.students.length,
@@ -1180,6 +1283,12 @@ app.post('/api/admin/backup/restore', authAdmin, (req: Request, res: Response) =
   };
 
   saveDatabase(database);
+
+  // Instantly sync all restored students, results, pins to Supabase
+  syncDatabaseToSupabase(database).catch((err) => {
+    console.error('Supabase restore sync error:', err);
+  });
+
   return res.json({
     success: true,
     message: `Database restored successfully: ${database.students.length} students, ${database.results.length} results, ${database.pins.length} PINs.`,
@@ -1196,6 +1305,9 @@ app.post('/api/admin/backup/restore', authAdmin, (req: Request, res: Response) =
 // ----------------------------------------------------
 
 async function startServer() {
+  app.use('/downloads', express.static(path.join(process.cwd(), 'public', 'downloads')));
+  app.use(express.static(path.join(process.cwd(), 'public')));
+
   if (process.env.NODE_ENV !== 'production') {
     const vite = await createViteServer({
       server: { middlewareMode: true },

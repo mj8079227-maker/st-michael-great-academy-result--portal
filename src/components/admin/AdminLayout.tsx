@@ -225,17 +225,18 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
               onClick={() => setIsMobileMenuOpen(false)}
             />
 
-            {/* Drawer Content */}
-            <div className="relative flex w-4/5 max-w-xs flex-1 flex-col bg-[#081226] border-r border-amber-500/30 p-5 shadow-2xl">
-              <div className="flex items-center justify-between border-b border-slate-800 pb-3 mb-4">
+            {/* Drawer Content - Pure Bold Black #040914 */}
+            <div className="relative flex w-4/5 max-w-xs flex-1 flex-col bg-[#040914] border-r border-amber-500/40 p-5 shadow-2xl">
+              <div className="flex items-center justify-between border-b border-amber-500/20 pb-3 mb-4">
                 <div className="flex items-center gap-2">
-                  <span className="font-['Cinzel',serif] text-sm font-black text-amber-300">
-                    PORTAL MENU
+                  <div className="h-2 w-2 rounded-full bg-amber-400"></div>
+                  <span className="font-['Cinzel',serif] text-sm font-black text-amber-300 tracking-wider">
+                    ADMIN MENU
                   </span>
                 </div>
                 <button
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="rounded-lg p-1 text-slate-400 hover:bg-slate-800"
+                  className="rounded-lg p-1 text-slate-400 hover:bg-slate-900 hover:text-white"
                 >
                   <X className="h-5 w-5" />
                 </button>
@@ -248,13 +249,13 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
                     <button
                       key={item.id}
                       onClick={() => handleSelect(item.id)}
-                      className={`flex w-full items-center gap-3 rounded-xl px-3 py-3 text-xs font-bold transition ${
+                      className={`flex w-full items-center gap-3 rounded-xl px-3.5 py-3 text-xs font-bold transition ${
                         isActive
-                          ? 'bg-amber-500 text-slate-950 shadow-md font-black'
-                          : 'text-slate-200 hover:bg-slate-800'
+                          ? 'bg-gradient-to-r from-amber-500 to-amber-400 text-slate-950 shadow-lg shadow-amber-500/20 font-black'
+                          : 'text-slate-200 bg-[#071124] hover:bg-slate-800 hover:text-amber-300 border border-slate-800/80'
                       }`}
                     >
-                      <span>{item.icon}</span>
+                      <span className={isActive ? 'text-slate-950' : 'text-amber-400'}>{item.icon}</span>
                       <span>{item.label}</span>
                     </button>
                   );
@@ -264,14 +265,14 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
               <div className="pt-4 border-t border-slate-800 mt-2 space-y-2">
                 <button
                   onClick={onExitPortal}
-                  className="flex w-full items-center justify-center gap-2 rounded-xl border border-slate-700 bg-slate-800 px-4 py-2 text-xs font-bold text-slate-300 hover:bg-slate-700 cursor-pointer"
+                  className="flex w-full items-center justify-center gap-2 rounded-xl border border-slate-700/80 bg-[#09152e] px-4 py-2 text-xs font-bold text-slate-300 hover:bg-slate-800 cursor-pointer"
                 >
                   <ArrowLeft className="h-4 w-4" />
                   <span>View Public Portal</span>
                 </button>
                 <button
                   onClick={onLogout}
-                  className="flex w-full items-center justify-center gap-2 rounded-xl bg-red-600 px-4 py-2.5 text-xs font-bold text-white shadow"
+                  className="flex w-full items-center justify-center gap-2 rounded-xl bg-red-600 hover:bg-red-500 px-4 py-2.5 text-xs font-bold text-white shadow"
                 >
                   <LogOut className="h-4 w-4" />
                   <span>LOGOUT</span>

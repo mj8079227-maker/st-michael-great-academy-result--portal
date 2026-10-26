@@ -38,6 +38,19 @@
       "studentNumber": "SMA-0006",
       "academicSession": "2026/2027",
       "studentFullName": "Justin Gabriel Ebosetale"
+    },
+    {
+      "id": "pin-sma-0007-1",
+      "pin": "58488",
+      "studentId": "std-sma-0007",
+      "studentNumber": "SMA-0007",
+      "studentFullName": "Johnson",
+      "resultId": "res-sma-0007-1",
+      "academicSession": "2026/2027",
+      "term": "First Term",
+      "status": "UNUSED",
+      "usedAt": null,
+      "createdAt": "2026-09-09T12:04:11.195Z"
     }
   ],
   "results": [
@@ -383,6 +396,127 @@
       "academicSession": "2026/2027",
       "principalRemark": "An exceptional performance. Promoted with pride to the next academic level.",
       "studentFullName": "Justin Gabriel Ebosetale"
+    },
+    {
+      "id": "res-sma-0007-1",
+      "studentId": "std-sma-0007",
+      "studentNumber": "SMA-0007",
+      "studentFullName": "Johnson",
+      "className": "JSS 1",
+      "academicSession": "2026/2027",
+      "term": "First Term",
+      "pin": "58488",
+      "isPublished": true,
+      "subjects": [
+        {
+          "id": "sub-j-1",
+          "subject": "English Language",
+          "ca1": 15,
+          "ca2": 15,
+          "exam": 45,
+          "total": 75,
+          "grade": "A",
+          "remark": "Distinction"
+        },
+        {
+          "id": "sub-j-2",
+          "subject": "Mathematics",
+          "ca1": 15,
+          "ca2": 15,
+          "exam": 45,
+          "total": 75,
+          "grade": "A",
+          "remark": "Distinction"
+        },
+        {
+          "id": "sub-j-3",
+          "subject": "Basic Science & Technology",
+          "ca1": 15,
+          "ca2": 15,
+          "exam": 45,
+          "total": 75,
+          "grade": "A",
+          "remark": "Distinction"
+        },
+        {
+          "id": "sub-j-4",
+          "subject": "Social Studies",
+          "ca1": 15,
+          "ca2": 15,
+          "exam": 45,
+          "total": 75,
+          "grade": "A",
+          "remark": "Distinction"
+        },
+        {
+          "id": "sub-j-5",
+          "subject": "Civic Education",
+          "ca1": 15,
+          "ca2": 15,
+          "exam": 45,
+          "total": 75,
+          "grade": "A",
+          "remark": "Distinction"
+        },
+        {
+          "id": "sub-j-6",
+          "subject": "Agricultural Science",
+          "ca1": 15,
+          "ca2": 15,
+          "exam": 45,
+          "total": 75,
+          "grade": "A",
+          "remark": "Distinction"
+        },
+        {
+          "id": "sub-j-7",
+          "subject": "Computer Studies / ICT",
+          "ca1": 15,
+          "ca2": 15,
+          "exam": 45,
+          "total": 75,
+          "grade": "A",
+          "remark": "Distinction"
+        },
+        {
+          "id": "sub-j-8",
+          "subject": "Business Studies",
+          "ca1": 15,
+          "ca2": 15,
+          "exam": 45,
+          "total": 75,
+          "grade": "A",
+          "remark": "Distinction"
+        },
+        {
+          "id": "sub-j-9",
+          "subject": "Christian Religious Studies",
+          "ca1": 15,
+          "ca2": 15,
+          "exam": 45,
+          "total": 75,
+          "grade": "A",
+          "remark": "Distinction"
+        },
+        {
+          "id": "sub-j-10",
+          "subject": "Physical & Health Education",
+          "ca1": 15,
+          "ca2": 15,
+          "exam": 45,
+          "total": 75,
+          "grade": "A",
+          "remark": "Distinction"
+        }
+      ],
+      "totalScore": 750,
+      "averageScore": 75,
+      "overallGrade": "A",
+      "teacherRemark": "Demonstrated commendable dedication, disciplined study habits, and consistent academic progress.",
+      "principalRemark": "An exceptional performance. Promoted with pride to the next academic level.",
+      "signedBy": "Mrs Mary",
+      "createdAt": "2026-09-09T12:04:11.195Z",
+      "updatedAt": "2026-09-09T12:04:11.195Z"
     }
   ],
   "sessions": [
@@ -466,6 +600,15 @@
       "createdAt": "2026-09-07T15:15:00.000Z",
       "studentNumber": "SMA-0006",
       "guardianContact": ""
+    },
+    {
+      "id": "std-sma-0007",
+      "fullName": "Johnson",
+      "studentNumber": "SMA-0007",
+      "className": "JSS 1",
+      "gender": "Male",
+      "guardianContact": "",
+      "createdAt": "2026-09-09T12:04:11.195Z"
     }
   ],
   "backgrounds": [
